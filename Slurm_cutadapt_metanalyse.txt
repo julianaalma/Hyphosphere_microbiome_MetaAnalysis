@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --job-name=job_screen_cutadapt          # Job name
+#SBATCH --output=job_screen_uniq_out.log     # Standard output and error log
+#SBATCH --partition=htc             # Partition choice (htc by default)
+#SBATCH --cpus-per-task=12         # Parallelize tasks, i.e. cores
+#SBATCH --mem=32000                 # Memory in MB per default
+#SBATCH --time=0-04:00:00            # Max time limit = 7 days
+#SBATCH --licenses=sps               # Declaration of storage and/or software resources
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate cutadapt
+#cutadapt -g ACTCCTACGGGAGGCAG -o combo.list.trim.contigs.good.cuta_16SF_normale_RV.fasta combo.list.trim.contigs.good.fasta --revcomp -e 0.2
+#cutadapt -a GGATTAGATACCCGTAGTC -o combo.list.trim.contigs.good.cuta_16SFR_RV_RV.fasta combo.list.trim.contigs.good.cuta_16SF_normale_RV.fasta --revcomp -e 0.2
+###We take 338F and 785R primers (Github : 16S Bacteria 338F-516P-805R BSA V.1 )### 
+###For reverse primer we did the reverse/complement###

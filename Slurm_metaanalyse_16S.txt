@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name=job_screen_cutadapt          # Job name
+#SBATCH --output=job_screen_uniq_out.log     # Standard output and error log
+#SBATCH --partition=htc             # Partition choice (htc by default)
+#SBATCH --cpus-per-task=6              # Parallelize tasks, i.e. cores
+#SBATCH --mem=128000                 # Memory in MB per default
+#SBATCH --time=0-10:00:00            # Max time limit = 7 days
+#SBATCH --licenses=sps               # Declaration of storage and/or software resources
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate mothur148
+cd /sps/leml/lblanchard/Donnees_metaanalyse/
+mothur Pipeline_16S_Metadata.txt

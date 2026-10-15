@@ -1,0 +1,30 @@
+#make.contigs(file=combo.list.txt)
+#summary.seqs(fasta=combo.list.trim.contigs.fasta, count=combo.list.contigs.count_table)
+#screen.seqs(fasta=combo.list.trim.contigs.fasta, count=combo.list.contigs.count_table, maxambig=0, maxhomop=10, minlength=200, maxlength=500, processors=36)
+#summary.seqs(fasta=combo.list.trim.contigs.good.fasta, count=combo.list.contigs.good.count_table)
+
+#Cutadapt : see Slurm_cutadapt_metaanalyse.txt
+
+#list.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.fasta)
+#get.seqs(accnos=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.accnos, count=combo.list.contigs.good.count_table)
+
+#summary.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.fasta, count=combo.list.contigs.good.pick.count_table, processors=1)
+#screen.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.fasta, summary=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.summary, count=combo.list.contigs.good.pick.count_table, maxambig=0, maxhomop=10, minlength=200, maxlength=500, processors=36)
+#summary.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.fasta, count=combo.list.contigs.good.pick.good.count_table, processors=1)
+
+#unique.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.fasta, count=combo.list.contigs.good.pick.good.count_table, processors=1)
+#chimera.vsearch(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.fasta, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.count_table)
+#summary.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.fasta, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.count_table, processors=1)
+
+#To classify :
+#cat sequence.fasta silva.nr_v138_2.align > SILVA.PhiX.align
+###For the taxonomy, i paste this : PhiX    #k__PhiX;p__Phix;c__PhiX;o__PhiX;f__PhiX;g__PhiX;s__PhiX, in the folder #silva.nr_v138_2.tax in IN2P3 in /sps/leml/lblanchard/Run2###
+#classify.seqs(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.fasta, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.count_table, reference=SILVA.PhiX.align, taxonomy=silva.nr_v138_2.tax)
+#get.lineage(taxonomy=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.nr_v138_2.wang.taxonomy, taxon=Bacteria-Archaea, fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.fasta, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.count_table)
+#cluster(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.fasta, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.pick.count_table, method=dgc, cutoff=0.01)
+
+#split.abund(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.fasta, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.pick.count_table, list=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.dgc.list, cutoff=50)
+#classify.otu(taxonomy=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.nr_v138_2.wang.pick.taxonomy, list=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.dgc.0.01.abund.list, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.pick.0.01.abund.count_table, relabund=F, basis=otu)
+#make.shared(list=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.dgc.0.01.abund.list, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.pick.0.01.abund.count_table)
+#get.oturep(fasta=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.0.01.abund.fasta, list=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.dgc.0.01.abund.list, count=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.denovo.vsearch.pick.0.01.abund.count_table, method=abundance)
+remove.lineage(constaxonomy=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.dgc.0.01.abund.0.01.cons.taxonomy, shared=combo.list.trim.contigs.good.cuta_16SFR_RV_RV.good.unique.denovo.vsearch.pick.dgc.0.01.abund.shared, taxon=Chloroplast-Mitochondria-unknown, label=0.01)
